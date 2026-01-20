@@ -3,7 +3,7 @@
 <p>Moleküler Biyolog adayı ve Nesli Tükenmiş Canlı Uzmanı</p>
 
 <div style="border: 1px solid #00ff00; padding: 10px; display: inline-block;">
-    <h3>Güncel Proje: Yünlü Mamut DNA Restorasyonu</h3>
+    <h3>Güncel Proje:Kaua'i'Ō 'ō (Moho Braccatus) DNA Restorasyonu</h3>
     <p>Matematiksel Başarı Olasılığı: %87.4 (Hesaplandı: e^x formülü ile)</p>
 </div>
 
