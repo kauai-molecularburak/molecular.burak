@@ -69,10 +69,54 @@
         <div style="text-align: center; background-color: #010409; padding: 12px; border-radius: 8px; font-family: monospace; border: 1px solid #00ffff; margin-top: 10px;">
             <code style="color: #00ffff;">[DNA Dizilimi]: ATGCGATCGATCGATCGATCGATCGA... [Hizalama Başarılı]</code>
         </div>
+<!-- CRISPR Oyunu Modülü -->
+<div style="background-color: #0d1117; border: 1px solid #00ffff; border-radius: 8px; padding: 20px; margin: 25px 0; box-shadow: 0 0 15px rgba(0,255,255,0.15); text-align: center;">
+    <h3 style="color: #00ffff; margin-top: 0; font-family: monospace;">🧬 MINI GAME: CRISPR-Cas9 Gen Tamiri</h3>
+    <p style="color: #c9d1d9; font-size: 0.9em; margin-bottom: 15px;">
+        Kaua'i 'Ō'ō genindeki sentetik hatayı düzelt! Eksik dizeyi tamamlamak için doğru bazı seç:
+    </p>
 
+    <!-- Hedef Gen Dizisi -->
+    <div style="font-family: monospace; font-size: 1.2em; letter-spacing: 3px; background: #010409; padding: 12px; border-radius: 6px; border: 1px dashed #30363d; margin-bottom: 15px;">
+        <span style="color: #8b949e;">5'- ATGC - </span>
+        <span id="target-base" style="color: #ff0055; font-weight: bold; text-decoration: underline;">[ ? ]</span>
+        <span style="color: #8b949e;"> - CGAT -3'</span>
+    </div>
+
+    <!-- Butonlar -->
+    <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+        <button onclick="checkCRISPR('A')" style="background: transparent; border: 1px solid #00ffff; color: #00ffff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">Adenin (A)</button>
+        <button onclick="checkCRISPR('T')" style="background: transparent; border: 1px solid #00ffff; color: #00ffff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">Timin (T)</button>
+        <button onclick="checkCRISPR('G')" style="background: transparent; border: 1px solid #00ffff; color: #00ffff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">Guanin (G)</button>
+        <button onclick="checkCRISPR('C')" style="background: transparent; border: 1px solid #00ffff; color: #00ffff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">Sitozin (C)</button>
+    </div>
+
+    <!-- Sonuç Mesajı -->
+    <div id="crispr-result" style="font-family: monospace; font-size: 0.9em; min-height: 24px; color: #8b949e;">
+        [Cas9 Enzimi Beklemede...]
+    </div>
+</div>
+
+<script>
+function checkCRISPR(base) {
+    const resultDiv = document.getElementById('crispr-result');
+    const targetSpan = document.getElementById('target-base');
+    
+    // Doğru baz Guanin (G) olsun
+    if (base === 'G') {
+        targetSpan.innerText = '[ G ]';
+        targetSpan.style.color = '#00ff66';
+        resultDiv.innerHTML = '<span style="color: #00ff66;">✔ BAŞARILI! Cas9 geni kesti, kesintisiz RNA sentezlendi. Kaua\'i \'Ō\'ō genomu %100 stabilize edildi! 🐦🔥</span>';
+    } else {
+        targetSpan.innerText = '[' + base + ']';
+        targetSpan.style.color = '#ff0055';
+        resultDiv.innerHTML = '<span style="color: #ff0055;">✖ HATA! Yanlış baz eşleşmesi. Mutasyon engellenemedi, tekrar dene!</span>';
+    }
+}
+</script>
         <!-- Zenodo DOI Rozeti -->
         <div style="text-align: center; margin: 15px 0;">
-            <!-- Zenodo'dan aldığın DOI kodunu tam buraya koyabilirsin -->
+             <a href = "https://doi.org/10.5281/zenodo.22729058"><img src = "https://zenodo.org/badge/1138356438.svg" alt = "DOI"></a> 
         </div>
 
         <!-- Akademik & Sosyal Bağlantılar -->
