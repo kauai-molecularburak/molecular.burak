@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -5,15 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Burak Reis | Biyocoğrafya & Matematik</title>
   
-  <!-- Modern Font & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
-  <!-- GitHub tarzı LaTeX render için MathJax desteği -->
+  <!-- MathJax (LaTeX Entegrasyonu) -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Chart.js (Grafik Kütüphanesi) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -25,19 +28,30 @@
 
   <main class="container">
     
-    <!-- Model 1: Ada Biyocoğrafyası -->
+    <!-- Model 1: Ada Biyocoğrafyası & Canlı Simülasyon -->
     <section class="card">
-      <h2>1. Ada Biyocoğrafyası & Tür-Alan Dengesi</h2>
-      <p>Robert MacArthur ve E.O. Wilson'ın kurduğu modele göre, bir adadaki tür sayısı adanın yüzölçümü ($A$) ile logaritmik bir ilişki içindedir:</p>
+      <h2>1. Ada Biyocoğrafyası & Tür-Alan Eğrisi Simülasyonu</h2>
+      <p>Robert MacArthur ve E.O. Wilson'ın kurduğu modele göre, bir adadaki tür sayısı adanın yüzölçümü ($A$) ile güç yasası ($S = c \cdot A^z$) ilişkisi içindedir.</p>
       
       <div class="math-box">
-        $$S = c \cdot A^z$$
+        $$S = c \cdot A^z \quad \iff \quad \log(S) = \log(c) + z \cdot \log(A)$$
       </div>
 
-      <p>Logaritmik dönüşüm yaptığımızda ise doğru denklemini elde ederiz:</p>
-      
-      <div class="math-box">
-        $$\log(S) = \log(c) + z \cdot \log(A)$$
+      <!-- Canlı Grafik Kontrol Paneli -->
+      <div class="controls-container" style="margin: 1.5rem 0; padding: 1rem; background: #090d12; border-radius: 8px;">
+        <div style="margin-bottom: 1rem;">
+          <label for="zSlider" style="display: inline-block; width: 180px; font-weight: 600;">z (Tür Eğim Katsayısı): <span id="zVal">0.25</span></label>
+          <input type="range" id="zSlider" min="0.10" max="0.50" step="0.01" value="0.25" style="vertical-align: middle; width: 50%;">
+        </div>
+        <div>
+          <label for="cSlider" style="display: inline-block; width: 180px; font-weight: 600;">c (Bölgesel Zenginlik): <span id="cVal">2.0</span></label>
+          <input type="range" id="cSlider" min="0.5" max="5.0" step="0.1" value="2.0" style="vertical-align: middle; width: 50%;">
+        </div>
+      </div>
+
+      <!-- Chart.js Tuvali -->
+      <div style="position: relative; height: 350px; width: 100%;">
+        <canvas id="speciesAreaChart"></canvas>
       </div>
     </section>
 
@@ -57,5 +71,7 @@
     <p>⚡️ Burak Reis tarafından geliştirilmektedir. &copy; 2026</p>
   </footer>
 
+  <!-- Özel JavaScript Kodu -->
+  <script src="script.js"></script>
 </body>
 </html>
