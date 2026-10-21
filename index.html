@@ -20,7 +20,7 @@
         </p>
 
         <hr style="border-color: #30363d; margin: 20px 0;">
-        <!-- 👨‍🔬 Hakkımda Bölümü -->
+
         <div style="background-color: #161b22; border: 1px solid #7ee787; border-radius: 8px; padding: 20px; margin: 20px 0;">
             <h2 style="color: #7ee787; margin-top: 0;">👨‍🔬 Hakkımda</h2>
             <p style="line-height: 1.6; color: #c9d1d9; font-size: 0.95em;">
@@ -92,54 +92,30 @@
                 Kaua'i 'Ō'ō genindeki sentetik hatayı düzelt! Eksik dizeyi tamamlamak için doğru bazı seç:
             </p>
 
-            <!-- Hedef Gen Dizisi -->
-            <div style="font-family: monospace; font-size: 1.2em; letter-spacing: 3px; background: #010409; padding: 12px; border-radius: 6px; border: 1px dashed #30363d; margin-bottom: 15px;">
-                <span style="color: #8b949e;">5'- ATGC - </span>
+            <div id="dna-display" style="font-family: monospace; font-size: 1.2em; letter-spacing: 3px; background: #010409; padding: 12px; border-radius: 6px; border: 1px dashed #30363d; margin-bottom: 15px;">
+                <span id="dna-prefix" style="color: #8b949e;">5'- </span>
                 <span id="target-base" style="color: #ff0055; font-weight: bold; text-decoration: underline;">[ ? ]</span>
-                <span style="color: #8b949e;"> - CGAT -3'</span>
+                <span id="dna-suffix" style="color: #8b949e;"> -3'</span>
             </div>
 
-            <!-- Butonlar -->
-            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                <button onclick="checkCRISPR('A')" style="background: transparent; border: 1px solid #00ffff; color: #00ffff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">A</button>
-                <button onclick="checkCRISPR('T')" style="background: transparent; border: 1px solid #00ffff; color: #00ffff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">T</button>
-                <button onclick="checkCRISPR('G')" style="background: transparent; border: 1px solid #00ffff; color: #00ffff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">G</button>
-                <button onclick="checkCRISPR('C')" style="background: transparent; border: 1px solid #00ffff; color: #00ffff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">C</button>
-            </div>
+            <div id="choices" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;"></div>
 
-            <!-- Sonuç Mesajı -->
+            <button id="new-game-button" onclick="startNewGame()" style="background: transparent; border: 1px solid #00ffff; color: #00ffff; padding: 8px 18px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-bottom: 12px;">
+                🔁 Yeni Oyun
+            </button>
+
             <div id="crispr-result" style="font-family: monospace; font-size: 0.9em; min-height: 24px; color: #8b949e;">
                 [Cas9 Enzimi Beklemede...]
             </div>
         </div>
 
-        <script>
-            function checkCRISPR(base) {
-                const resultDiv = document.getElementById('crispr-result');
-                const targetSpan = document.getElementById('target-base');
-
-                if (base === 'G') {
-                    targetSpan.innerText = '[ G ]';
-                    targetSpan.style.color = '#00ff66';
-                    resultDiv.innerHTML = '<span style="color: #00ff66;">✔ BAŞARILI! Cas9 geni kesti, kesintisiz RNA sentezlendi. Kaua\'i \'Ō\'ō genomu %100 stabilize edildi! 🐦🔥</span>';
-                } else {
-                    targetSpan.innerText = '[' + base + ']';
-                    targetSpan.style.color = '#ff0055';
-                    resultDiv.innerHTML = '<span style="color: #ff0055;">✖ HATA! Yanlış baz eşleşmesi. Mutasyon engellenemedi, tekrar dene!</span>';
-                }
-            }
-        </script>
-
-        <!-- Zenodo DOI Rozeti -->
         <div style="text-align: center; margin: 15px 0;">
             <a href="https://doi.org/10.5281/zenodo.22729058">
                 <img src="https://zenodo.org/badge/1138356438.svg" alt="DOI">
             </a>
         </div>
 
-        <!-- Akademik & Sosyal Bağlantılar -->
         <div style="text-align: center; margin: 20px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-
             <a href="https://zenodo.org/records/22862281"
                target="_blank"
                rel="noopener noreferrer"
@@ -167,15 +143,83 @@
                style="color: #00ffff; text-decoration: none; font-size: 0.85em; border: 1px solid #00ffff; padding: 6px 12px; border-radius: 6px; background-color: rgba(0, 255, 255, 0.05);">
                 📸 Instagram
             </a>
-
         </div>
 
         <hr style="border-color: #30363d; margin: 20px 0 10px 0;">
         <p style="font-size: 0.8em; color: #8b949e; text-align: center; margin: 0;">
             © 2026 molecular.Burak — Biyolojik Gelecek Laboratuvarı. Bütün hakları saklıdır.
         </p>
-
     </div>
 
+    <script>
+        const dnaTasks = [
+            { prefix: "5'- ATGC - ", suffix: " - CGAT -3'", answer: "G", options: ["A", "T", "G", "C"] },
+            { prefix: "5'- TAGC - ", suffix: " - GATC -3'", answer: "C", options: ["A", "T", "G", "C"] },
+            { prefix: "5'- GGTA - ", suffix: " - TCAA -3'", answer: "A", options: ["A", "T", "G", "C"] },
+            { prefix: "5'- ACGT - ", suffix: " - TGCA -3'", answer: "T", options: ["A", "T", "G", "C"] },
+            { prefix: "5'- GATG - ", suffix: " - CCTA -3'", answer: "G", options: ["A", "T", "G", "C"] },
+            { prefix: "5'- TTAC - ", suffix: " - GACT -3'", answer: "C", options: ["A", "T", "G", "C"] },
+            { prefix: "5'- CCGA - ", suffix: " - ATGC -3'", answer: "A", options: ["A", "T", "G", "C"] }
+        ];
+
+        let currentAnswer = "";
+
+        const resultDiv = document.getElementById('crispr-result');
+        const targetSpan = document.getElementById('target-base');
+        const choicesDiv = document.getElementById('choices');
+        const dnaPrefix = document.getElementById('dna-prefix');
+        const dnaSuffix = document.getElementById('dna-suffix');
+
+        function shuffle(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function startNewGame() {
+            const task = dnaTasks[Math.floor(Math.random() * dnaTasks.length)];
+            currentAnswer = task.answer;
+
+            dnaPrefix.textContent = task.prefix;
+            dnaSuffix.textContent = task.suffix;
+            targetSpan.textContent = "[ ? ]";
+            targetSpan.style.color = "#ff0055";
+
+            resultDiv.textContent = "[Cas9 Enzimi Beklemede...]";
+            resultDiv.style.color = "#8b949e";
+
+            choicesDiv.innerHTML = "";
+            shuffle(task.options).forEach(base => {
+                const button = document.createElement("button");
+                button.textContent = base;
+                button.style.background = "transparent";
+                button.style.border = "1px solid #00ffff";
+                button.style.color = "#00ffff";
+                button.style.padding = "8px 16px";
+                button.style.borderRadius = "4px";
+                button.style.cursor = "pointer";
+                button.style.fontWeight = "bold";
+                button.onclick = () => checkCRISPR(base);
+                choicesDiv.appendChild(button);
+            });
+        }
+
+        function checkCRISPR(base) {
+            if (base === currentAnswer) {
+                targetSpan.textContent = "[ " + base + " ]";
+                targetSpan.style.color = "#00ff66";
+                resultDiv.innerHTML = '<span style="color: #00ff66;">✔ BAŞARILI! Cas9 geni kesti, kesintisiz RNA sentezlendi. Kaua\'i \'Ō\'ō genomu %100 stabilize edildi! 🐦🔥</span>';
+            } else {
+                targetSpan.textContent = "[ " + base + " ]";
+                targetSpan.style.color = "#ff0055";
+                resultDiv.innerHTML = '<span style="color: #ff0055;">✖ HATA! Yanlış baz eşleşmesi. Mutasyon engellenemedi, tekrar dene!</span>';
+            }
+        }
+
+        startNewGame();
+    </script>
 </body>
 </html>
